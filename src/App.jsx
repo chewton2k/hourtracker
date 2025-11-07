@@ -303,7 +303,7 @@ const App = () => {
   }
 
  return (
-    <div className="min-h-screen bg-gray-50 py-4 sm:py-8 px-0 font-sans">
+    <div className="min-w-screen bg-gray-50 py-4 sm:py-8 px-0 font-sans">
       <div className="w-full">
         
         {/* Header & Status */}
