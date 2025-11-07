@@ -303,8 +303,8 @@ const App = () => {
   }
 
  return (
-    <div className="min-w-screen bg-gray-50 py-4 sm:py-8 px-0 font-sans">
-      <div className="w-full">
+    <div className="min-w-screen bg-gray-50 py-10 sm:py-8 px-0 font-sans">
+      <div className="w-full py-10 px-20">
         
         {/* Header & Status */}
         <header className="text-center mb-6">
@@ -426,8 +426,8 @@ const App = () => {
                   </div>
                   
                   {/* Sessions within the period */}
-                  <div className="overflow-x-auto">
-                    <table className="divide-y divide-gray-200">
+                  <div className="w-full overflow-x-auto">
+                    <table className="w-full table-fixed divide-y divide-gray-200">
                       <thead className="bg-white">
                         <tr>
                           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
@@ -455,7 +455,7 @@ const App = () => {
                                 <span className="font-semibold text-yellow-600">IN PROGRESS</span>
                               )}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-right">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-right text-gray-500">
                               {session.duration !== null ? dateHelpers.formatDuration(session.duration) : '-'}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
