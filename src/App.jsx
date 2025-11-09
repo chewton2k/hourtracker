@@ -67,6 +67,10 @@ const dateHelpers = {
   }
 };
 
+
+
+
+
 const TimePeriodOptions = [
   { value: 'weekly', label: 'Weekly Total' },
   { value: 'biweekly', label: 'Biweekly Total' },
@@ -85,7 +89,37 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [jobInput, setJobInput] = useState(''); // New state for job name input
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
+
+    formatDurationHMS: (totalSeconds) => {
+  if (totalSeconds === null || isNaN(totalSeconds)) return '0:00:00';
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  return `${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+}
+
+  useEffect(() => {
+  if (!isTracking) {
+    setElapsedSeconds(0);
+    return;
+  }
+
+  const activeSession = sessions.find(s => !s.end_time);
+  if (!activeSession) return;
+
+  const interval = setInterval(() => {
+    const now = new Date();
+    const startTime = activeSession.start_time;
+    const durationMs = now.getTime() - startTime.getTime();
+    setElapsedSeconds(Math.floor(durationMs / 1000)); 
+  }, 1000);
+
+  return () => clearInterval(interval);
+}, [isTracking, sessions]);
+
+  
   // 1. FIREBASE INITIALIZATION AND AUTHENTICATION
   useEffect(() => {
     if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey.includes('YOUR_API_KEY')) {
@@ -377,6 +411,12 @@ const App = () => {
                 </>
               )}
             </button>
+          <div className="mt-2 text-lg text-indigo-600 font-medium flex items-center space-x-1">
+            <span>Time Elapsed:</span>
+            {isTracking && (
+              <span>{dateHelpers.formatDuration(elapsedSeconds)}</span>
+            )}
+          </div>
           </div>
         </div>
 
